@@ -46,8 +46,7 @@ int main(){
         o2.push_back(o1[0]) ;
         outputs.push_back(o2);
 
-        //delete i1[0];
-        //delete o1[0];
+    
 
     }
 
@@ -57,41 +56,18 @@ int main(){
 
     
     Topology topology({2,3, 1});
-    //Layers layerss ;
-    //layerss = topology.layers ;
+    
     Layers layer = topology.layers;
     int data_size = 4 ;
     int epochs =  100;
     
     
     SimpleNeuralNetWork model(topology) ;
-    /*
-    Neurons c(1,1);
-    Neurons d(1,1);
-    Matrix e(1,1, false) ;
     
-    std::cout << c.neurons.element[0][0] << "\n" ;
-    c.neurons = c.neurons.sigmoid()*2 + c.neurons ;
-    std::cout << c.neurons.element[0][0] << "\n" ;
-    
-    std::cout << c.neurons.element[0][0] << "\n" ;
-    c.neurons = model.sigmoid(c.neurons)*3 + c.neurons;
-    d.neurons = d.neurons*3 + 1;
-    e = d.neurons +1 ;
-    std::cout << c.neurons.element[0][0] << "\n" ;
-    std::cout << d.neurons.element[0][0] << "\n" ;
-    std::cout << e.element[0][0] << "\n" ;
-    d.neurons = c.neurons+1 ;
-    std::cout << c.neurons.element[0][0] << "\n" ;
-    std::cout << d.neurons.element[0][0] << "\n" ;
-    std::cout << e.element[0][0] << "\n" ;
-   
-    exit(0);
-     */
     std::vector<std::vector<Matrix>> data ;
 
     
-    //model.train(inputs[0], outputs[0]);
+    
     for(int j = 0; j < epochs ; j++){
 
         for(int i =0; i < data_size; i++){

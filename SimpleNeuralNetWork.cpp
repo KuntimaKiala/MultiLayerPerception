@@ -8,17 +8,12 @@ SimpleNeuralNetWork::SimpleNeuralNetWork()
 SimpleNeuralNetWork::~SimpleNeuralNetWork()
 {
 
-  /*
-   No need of deleting _topology because topology is deleted in topology.cpp
-  */
-
    
-
 }
 
 SimpleNeuralNetWork::SimpleNeuralNetWork(Topology& topology) :_topology(&topology){
     
-    //_topology.NeuronsPerLayer.size() -1 :_topology(topology)
+    
    for(int i = 0; i<(*_topology).NeuronsPerLayer.size() -1; i++){
         
         weights.push_back(Matrix(topology.NeuronsPerLayer[i], topology.NeuronsPerLayer[i+1],true)) ;
@@ -47,43 +42,14 @@ void SimpleNeuralNetWork::FeedForward(){
     layers[0].neurons = X ;
    
     for(int l = 0; l < nbLayer -1 ; l++) {
-        
-    
-        if (l == 5) {
-            std::cout << "W0 :" << "\n" ;  
-
-            std::cout << weights[l].at(0,0) <<" "<< weights[l].at(0,1) <<" "<< weights[l].at(0,2) << "\n";
-            std::cout << weights[l].at(1,0) <<" "<< weights[l].at(1,1) <<" "<< weights[l].at(1,2)<< "\n";;
-            
-
-        }
-
-        if (l == 0) {
-            std::cout << "W1 :" << "\n" ;  
-
-            std::cout << weights[l].at(0,0) << "\n";
-            std::cout << weights[l].at(1,0) << "\n";
-            //std::cout << weights[l].at(2,0) << "\n";
-            
-
-        }
-        
+              
         
         layers[l+1].neurons = layers[l].neurons*(weights[l]) + bias[l];
-        //layers[l+1].neurons = layers[l+1].neurons + bias[l];
+        
         layers[l+1].neurons = layers[l+1].neurons.sigmoid() ;
       
        
-   
     }
-
-  std::cout << "a_2 :"<<layers.back().neurons.at(0,0) << "\n";
-  //std::function<int(const int&)>
-  //layers.back().neurons = layers.back().neurons.ApplyFunction(std::function <double(const double & m)>{predit});
-  //layers.back().neurons = layers.back().neurons.ApplyFunction(predit);
-    
-   std::cout << "predicion :" << layers.back().neurons.at(0,0) << "\n";
-  
 
   
 }
@@ -115,16 +81,7 @@ int nbLayers  = weights.size()  ;
    
         weights[l]  = weights[l] - learningrate_times_A_transposed_times_dC_over_dW;
         bias[l]     = bias[l]    - learningrate_times_dC_over_dW ;
-        if (l == 0) {
-            std::cout << "W1_up :" << "\n" ;  
-
-            std::cout << weights[l].at(0,0) <<" "<< learningrate_times_A_transposed_times_dC_over_dW.at(0,0) <<" " << errors[l].at(0,0) << "\n";
-            std::cout << weights[l].at(1,0) << " "<< learningrate_times_A_transposed_times_dC_over_dW.at(1,0)<<" " << errors[l].at(0,0)<< "\n";
-            //std::cout << weights[l].at(2,0) << "\n";
-            
-
-        }
-        //layers[l].neurons = layers[l].neurons.transpose() ;
+        
     }
 
 
@@ -135,21 +92,15 @@ void SimpleNeuralNetWork::calcErrors(Matrix& Y)
 {
 
 
-    //std::cout << "\n\nBACKPROP\n" <<std::endl;
-
-    std::cout << "y :" << Y.element[0][0] << std::endl;
-
-
-
 
 int nbLayers  = layers.size() -1 ;
 Matrix Y_Hat(layers.back().neurons.rows(), layers.back().neurons.columns(), false); 
 Y_Hat = layers.back().neurons ;
 
 errors.back() =   Y_Hat - Y;
-//std::cout << nbLayers << std::endl;
+
 for (uint32_t L = nbLayers-1; L > 0; L--){
-    //(weights[L]).shape() ;
+   
     Matrix Weight_Transposed =  (weights[L]).transpose() ;
     Matrix deriv = layers[L].neurons.sigmoid_deriv(); 
     errors[L-1] =  ((errors[L])*Weight_Transposed).Hadamard(deriv); 
@@ -168,13 +119,12 @@ void SimpleNeuralNetWork::train(std::vector<Matrix>& input_data, std::vector<Mat
     for (int nbInput = 0; nbInput < input_data.size(); nbInput++) {
         std::cout << std::endl ;
         X  = input_data[nbInput];
-        //inputs.shape();
-        std::cout <<"input"<< "("<<nbInput<<")"<<" :"<<  X.at(0,0)<<" " << X.at(0,1)<< std::endl ;
+        
+        //std::cout <<"input"<< "("<<nbInput<<")"<<" :"<<  X.at(0,0)<<" " << X.at(0,1)<< std::endl ;
  
         Y = output_data[nbInput] ;
-        std::cout <<"output"<< "("<<nbInput<<")"<<" :"<< Y.at(0,0)<<std::endl ;
+        //std::cout <<"output"<< "("<<nbInput<<")"<<" :"<< Y.at(0,0)<<std::endl ;
         //outputs.shape();
-        
         
         FeedForward();
         //exit(0);
@@ -194,7 +144,7 @@ void SimpleNeuralNetWork::prediction(std::vector<Matrix>& input_data, std::vecto
     for (int nbInput = 0; nbInput < input_data.size(); nbInput++) {
         std::cout << std::endl ;
         X  = input_data[nbInput];
-        //inputs.shape();
+        
         std::cout <<"input"<< "("<<nbInput<<")"<<" :"<<  X.at(0,0)<<" " << X.at(0,1)<< std::endl ;
  
         Y = output_data[nbInput] ;
@@ -203,21 +153,12 @@ void SimpleNeuralNetWork::prediction(std::vector<Matrix>& input_data, std::vecto
         for(int l = 0; l < nbLayer -1 ; l++) {
         
             layers[l+1].neurons = layers[l].neurons*(weights[l]) + bias[l];
-            //layers[l+1].neurons = layers[l+1].neurons + bias[l];
+           
             layers[l+1].neurons = layers[l+1].neurons.sigmoid() ;
 
-            if (l == 5) {
-                std::cout << "W0 :" << "\n" ;  
-
-                std::cout << weights[l].at(0,0) <<" "<< weights[l].at(0,1) <<" "<< weights[l].at(0,2) << "\n";
-                std::cout << weights[l].at(1,0) <<" "<< weights[l].at(1,1) <<" "<< weights[l].at(1,2)<< "\n";;
-                std::cout << std::endl;
-
-            }
             
-        
-        
-   
+            
+
        }
 
        layers.back().neurons = layers.back().neurons.ApplyFunction(predit);

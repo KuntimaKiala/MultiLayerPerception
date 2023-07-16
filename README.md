@@ -1,1 +1,3 @@
-# Mutilayer Perception Using only C++ no libraries,  XOR
+# Mutilayer Perception Using only C++ no libraries,  
+
+--> XOR

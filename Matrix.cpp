@@ -38,7 +38,7 @@ if(rand_init == true){
             
             _MAT[row][col]    =  (double) m.element[row][col];
             element[row][col] =  _MAT[row][col];
-            //std::cout << m.element[row][col]  << std::endl;
+         
         }
        
     }
@@ -73,7 +73,7 @@ for (uint32_t row = 0; row< this->_MAT.size(); row++){
 return output;
 
 }
-//template <class T>
+
 Matrix Matrix::ApplyFunction(std::function <double(const double & m)> func){
 
     Matrix output(_rows, _columns, false) ;
