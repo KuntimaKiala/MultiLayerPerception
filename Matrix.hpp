@@ -26,7 +26,7 @@ class Matrix{
         Matrix operator-(const double &m);
         Matrix operator*(Matrix &m) ;
         Matrix operator*(const double &m) ;
-        Matrix DiagonalMatrix(uint32_t rows, uint32_t columns) ;
+        Matrix DiagonalMatrix() ;
         Matrix Hadamard(Matrix & m1);
         Matrix transpose() ;
         Matrix sigmoid () ;
