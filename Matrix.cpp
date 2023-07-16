@@ -27,10 +27,7 @@ element.resize(_rows, std::vector<double>(_columns, 0.0) );
 
 if(rand_init == true){
     Matrix m = xavier_init() ;
-  
-    
-    
-    
+
     for (uint32_t row = 0; row<  m.rows(); row++){
 
         

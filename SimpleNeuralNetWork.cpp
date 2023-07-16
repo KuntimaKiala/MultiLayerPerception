@@ -38,17 +38,15 @@ int SimpleNeuralNetWork::predit(const double &y_hat) {
 
 
 void SimpleNeuralNetWork::FeedForward(){
+
     int nbLayer = layers.size() ;
     layers[0].neurons = X ;
    
     for(int l = 0; l < nbLayer -1 ; l++) {
               
-        
         layers[l+1].neurons = layers[l].neurons*(weights[l]) + bias[l];
-        
         layers[l+1].neurons = layers[l+1].neurons.sigmoid() ;
       
-       
     }
 
   
@@ -61,7 +59,6 @@ void SimpleNeuralNetWork::FeedForward(){
 
 void SimpleNeuralNetWork::backPropagation(){
     calcErrors(Y);
-
     updateWeights();
 }
 
@@ -91,8 +88,6 @@ int nbLayers  = weights.size()  ;
 void SimpleNeuralNetWork::calcErrors(Matrix& Y)
 {
 
-
-
 int nbLayers  = layers.size() -1 ;
 Matrix Y_Hat(layers.back().neurons.rows(), layers.back().neurons.columns(), false); 
 Y_Hat = layers.back().neurons ;
@@ -117,17 +112,11 @@ void SimpleNeuralNetWork::train(std::vector<Matrix>& input_data, std::vector<Mat
     
 
     for (int nbInput = 0; nbInput < input_data.size(); nbInput++) {
-        std::cout << std::endl ;
+
         X  = input_data[nbInput];
-        
-        //std::cout <<"input"<< "("<<nbInput<<")"<<" :"<<  X.at(0,0)<<" " << X.at(0,1)<< std::endl ;
- 
         Y = output_data[nbInput] ;
-        //std::cout <<"output"<< "("<<nbInput<<")"<<" :"<< Y.at(0,0)<<std::endl ;
-        //outputs.shape();
-        
+    
         FeedForward();
-        //exit(0);
         backPropagation();
         
     }
@@ -142,7 +131,7 @@ void SimpleNeuralNetWork::prediction(std::vector<Matrix>& input_data, std::vecto
 
 
     for (int nbInput = 0; nbInput < input_data.size(); nbInput++) {
-        std::cout << std::endl ;
+       
         X  = input_data[nbInput];
         
         std::cout <<"input"<< "("<<nbInput<<")"<<" :"<<  X.at(0,0)<<" " << X.at(0,1)<< std::endl ;
@@ -164,7 +153,7 @@ void SimpleNeuralNetWork::prediction(std::vector<Matrix>& input_data, std::vecto
        layers.back().neurons = layers.back().neurons.ApplyFunction(predit);
     
         std::cout << "predicion :" << layers.back().neurons.at(0,0) << "\n";
-        
+         std::cout << std::endl ;
 
 
     }
@@ -234,12 +223,7 @@ double SimpleNeuralNetWork::ReLu(double & x){
    
  
     double output = 0.0;
-
-
-   
     if (x <= output) return output;
-    
-    
     
     return x;  
     
@@ -247,11 +231,9 @@ double SimpleNeuralNetWork::ReLu(double & x){
 }
 
 double SimpleNeuralNetWork::ReLu_deriv (double& x) {
+
     double output = 0.0;
-
     if (x > output ) return 1.0;
-
-
 
     return 0.0;  
         
