@@ -1,6 +1,6 @@
 # Mutilayer Perception 
 A C++ Multilayer Perception no libraries  <br />
-I just wanted to do backpropagation from scratch using c++ studying purposes<br />
+I just wanted to do backpropagation from scratch using c++ for studying purposes<br />
 XOR
 
 
