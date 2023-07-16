@@ -88,8 +88,6 @@ Matrix Matrix::ApplyFunction(std::function <double(const double & m)> func){
     return output;
 }
 
-
-
 Matrix Matrix::DiagonalMatrix(uint32_t rows, uint32_t columns) {
 Matrix Diag(rows, columns, false);
 for (uint32_t row = 0; row< this->_MAT.size(); row++){
