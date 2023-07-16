@@ -25,10 +25,10 @@ public:
 
     double sigmoid (const double& m1);
     Matrix cost(Matrix& y, Matrix& y_hat) ;
-    double sigmoid (double& m1);
-    double sigmoid_deriv (double& m1);
-    double ReLu(double & x);
-    double ReLu_deriv (double& y);
+    inline double sigmoid (double& m1);
+    inline double sigmoid_deriv (double& m1);
+    inline double ReLu(double & x);
+    inline double ReLu_deriv (double& y);
 
     ~SimpleNeuralNetWork();
 
