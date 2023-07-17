@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include "Matrix.hpp"
+#include <bits/stdc++.h>
+
+using namespace std ;
+
+
+
+
+int main(){
+
+    vector<vector<double>> in{{4,3,2,1}, 
+                              {4,3,2,1},
+                              {4,3,2,1},
+                              {4,3,2,1}};
+
+    vector<vector<double>> out{{1,0,-1}, 
+                               {1,0,-1},
+                               {1,0,-1}};
+                             
+    
+    Matrix mat(in) ;
+    Matrix kernel(out) ;
+    cout << kernel.rows() << endl ;
+    cout << kernel.columns() << endl ;
+    Matrix matrix ;
+    Matrix output = matrix.Convolution2D(mat, kernel) ;
+
+
+    std::cout << "\n" ;
+    
+    std::cout << "Ouput :\n";
+    for(int i = 0; i < output.rows(); i++){
+        for(int j = 0; j < output.columns(); j++){
+
+            std::cout << output.at(i,j) << " ";
+            
+        }
+        std::cout << "\n";
+
+    }
+
+    std::cout << "\n";
+
+    
+    return 1 ;
+}

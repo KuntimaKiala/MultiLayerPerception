@@ -3,7 +3,6 @@
 #include "Matrix.hpp"
 #include "SimpleNeuralNetWork.hpp"
 #include "Topology.hpp"
-#include <eigen3/Eigen/Eigen>
 #include <bits/stdc++.h>
 
 
@@ -15,9 +14,7 @@ typedef std::vector<std::vector<Matrix>> Data ;
 int main(){
     
     std::srand(time(0));
-    Eigen::MatrixXf MatrixF ;
-    
-    
+  
     std::vector< std::vector<std::vector<double>>> in{{{0,0}}, 
                                                       {{0,1}}, 
                                                       {{1,0}}, 

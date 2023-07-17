@@ -17,6 +17,13 @@ Matrix::Matrix(std::vector<std::vector<double>> MAT) : element(MAT), _MAT(MAT){
  
     _rows = MAT.size();
     _columns = MAT[0].size();
+
+
+    for (int i =0 ; i < _rows; i++) {
+
+        assert(_columns == MAT[i].size()&&"Matrix definition incorrect, some columns missing") ;
+
+    }
 }
 
 
@@ -47,6 +54,62 @@ if(rand_init == true){
 }
 
 
+
+Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int stride  ) {
+    assert(kernel.rows() == kernel.columns() && "kernel must be a squere matrix") ;
+    int k = kernel.columns() ;
+    int p = padding ;
+    int s = stride ;
+    int W1 = matrix.rows() ;
+    int H1 = matrix.columns() ;
+
+    int W2 = ((W1-k + 2*p)/s) + 1  ;
+    int H2 = ((H1-k + 2*p)/s) + +1 ;
+    Matrix output(W2, H2,false) ;
+
+
+    for(int i=0;i<W2;i++){
+        for(int j= 0;j <H2; j++){
+            double sum = (matrix.block(i,j,k).Hadamard(kernel)).sum() ;
+            output._MAT[i][j]    = sum ;
+            output.element[i][j] = sum ;
+
+        }
+    }
+
+    return output ;
+}
+
+
+Matrix  Matrix::block(int row, int column, int kernel_size) {
+
+        Matrix output(kernel_size, kernel_size,false) ;
+        for(int i=0;i<kernel_size;i++){
+            for(int j= 0;j <kernel_size; j++){
+
+                output._MAT[i][j]    = _MAT[i][j];
+                output.element[i][j] = output._MAT[i][j] ;
+
+            }
+        }
+
+    return output ;
+
+}
+
+
+double  Matrix::sum() {
+        double output = 0.0 ;
+
+        for(int i=0;i<_MAT.size();i++){
+            for(int j= 0;j <_MAT[0].size(); j++){
+
+                output  += _MAT[i][j];
+            
+            }
+        }
+    return output ;
+}
 Matrix Matrix::xavier_init() {
 
 Matrix output(_rows, _columns, false) ;
