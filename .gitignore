@@ -3,9 +3,5 @@ q
 run
 Makefile
 CMakeCache.txt
-*.cmake
-*.check_cache
-*.log
-Makefile*
-*.marks
+
 

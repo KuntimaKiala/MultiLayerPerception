@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/train.dir/main.cpp.o CMakeFiles/train.dir/Matrix.cpp.o CMakeFiles/train.dir/Neurons.cpp.o CMakeFiles/train.dir/Topology.cpp.o CMakeFiles/train.dir/SimpleNeuralNetWork.cpp.o  -o train 
