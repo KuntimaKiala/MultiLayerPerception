@@ -6,7 +6,8 @@ XOR
 
 ## Usage :
 g++ main.cpp SimpleNeuralNetWork.cpp Topology.cpp Neurons.cpp Matrix.cpp -o run <br />
-./run <br />
+./run or <br />
+ cmake . && make <br /> 
 This command is for training in the end there is a prediction
 
 
