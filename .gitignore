@@ -6,3 +6,6 @@ CMakeCache.txt
 train
 cmake_install.cmake
 CMakeFiles
+.ninja_*
+*.json
+*.ninja
