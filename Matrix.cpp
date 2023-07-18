@@ -75,7 +75,7 @@ Matrix  Matrix::padding(int padding) {
 
 Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int stride,bool vis  ) {
     
-    assert(kernel.rows() == kernel.columns() && "kernel must be a squere matrix") ;
+    assert(kernel.rows() == kernel.columns() && "kernel must be a square matrix") ;
 
     int k = kernel.columns() ;
     int p = padding ;
@@ -86,7 +86,7 @@ Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int 
     int W2 = ((W1-k + 2*p)/s) + 1  ;
     int H2 = ((H1-k + 2*p)/s) + 1 ;
 
-   
+     Matrix output(W2, H2,false) ;
     if (padding != 0) matrix = matrix.padding(padding);
    
     if (vis == true){
@@ -104,12 +104,7 @@ Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int 
         std::cout << std::endl;
     }
     }
-   
 
-    Matrix output(W2, H2,false) ;
-    output.shape();
-    int w = 1 + (matrix.rows()-k)/s ;
-    int h = 1 + (matrix.columns()-k)/s ;
     int m = 0 ;
     int n = 0 ;
     s = s - 1 ;
@@ -121,7 +116,7 @@ Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int 
             if (j+n >= matrix.columns()) break ;
             if (i+m >= matrix.rows()) break ;
             
-            Matrix block  = matrix.block(i+m,j+n,w,h,k) ;
+            Matrix block  = matrix.block(i+m,j+n,k) ;
             
            n = n+s ;
            
@@ -144,7 +139,7 @@ Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int 
 }
 
 
-Matrix  Matrix::block(int row, int column, int w, int h, int kernel_size, bool vis) {
+Matrix  Matrix::block(int row, int column, int kernel_size, bool vis) {
 
         Matrix output(kernel_size, kernel_size,false) ;
         int m,n  ;

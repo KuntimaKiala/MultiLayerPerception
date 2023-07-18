@@ -28,7 +28,7 @@ class Matrix{
         Matrix operator*(const double &m) ;
         Matrix DiagonalMatrix() ;
         Matrix  Convolution2D(Matrix &matrix, Matrix &kernel, int padding =0, int stride =1, bool vis =false ) ;
-        Matrix  block(int row, int column, int w, int h, int kernel_size, bool vis = false) ;
+        Matrix  block(int row, int column, int kernel_size, bool vis = false) ;
         Matrix  padding(int padding) ;
         double  sum() ;
         Matrix Hadamard(Matrix &m1);
