@@ -27,10 +27,11 @@ class Matrix{
         Matrix operator*(Matrix &m) ;
         Matrix operator*(const double &m) ;
         Matrix DiagonalMatrix() ;
-        Matrix  Convolution2D(Matrix &matrix, Matrix &kernel, int padding =0, int stride =1 ) ;
-        Matrix  block(int row, int column, int kernel_size) ;
+        Matrix  Convolution2D(Matrix &matrix, Matrix &kernel, int padding =0, int stride =1, bool vis =false ) ;
+        Matrix  block(int row, int column, int w, int h, int kernel_size, bool vis = false) ;
+        Matrix  padding(int padding) ;
         double  sum() ;
-        Matrix Hadamard(Matrix & m1);
+        Matrix Hadamard(Matrix &m1);
         Matrix transpose() ;
         Matrix sigmoid () ;
         Matrix sigmoid_deriv ();
@@ -50,6 +51,7 @@ class Matrix{
     uint32_t _columns ;
     std::vector<std::vector<double>> _MAT;
     std::vector<std::vector<double>> _diag;
+    
 
 };
 

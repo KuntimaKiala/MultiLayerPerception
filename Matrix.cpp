@@ -54,9 +54,29 @@ if(rand_init == true){
 }
 
 
+Matrix  Matrix::padding(int padding) {
 
-Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int stride  ) {
+   
+    Matrix paddedMatrix(_MAT.size() + padding*2, _MAT[0].size() + padding*2, false) ;
+
+    for (int i = padding; i < paddedMatrix.rows() -padding;i++ ){
+
+        for (int j = padding; j <paddedMatrix.columns()-padding;j++ ){
+            paddedMatrix._MAT[i][j] =  _MAT[i-padding][j-padding] ;
+            paddedMatrix.element[i][j] =  paddedMatrix._MAT[i][j] ;
+        
+        }
+    }
+
+
+    return paddedMatrix ;
+}
+
+
+Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int stride,bool vis  ) {
+    
     assert(kernel.rows() == kernel.columns() && "kernel must be a squere matrix") ;
+
     int k = kernel.columns() ;
     int p = padding ;
     int s = stride ;
@@ -64,33 +84,88 @@ Matrix  Matrix::Convolution2D (Matrix &matrix, Matrix &kernel, int padding, int 
     int H1 = matrix.columns() ;
 
     int W2 = ((W1-k + 2*p)/s) + 1  ;
-    int H2 = ((H1-k + 2*p)/s) + +1 ;
+    int H2 = ((H1-k + 2*p)/s) + 1 ;
+
+   
+    if (padding != 0) matrix = matrix.padding(padding);
+   
+    if (vis == true){
+
+        std::cout << "MATRIX\n";
+    for(int i=0;i<matrix.rows();i++){
+        for(int j= 0;j <matrix.columns(); j++){
+
+
+            //std::cout << "MATRIX (" << i <<"," <<j<<")\n";
+           std::cout  << matrix._MAT[i][j] << " " ;
+            
+
+        }
+        std::cout << std::endl;
+    }
+    }
+   
+
     Matrix output(W2, H2,false) ;
+    output.shape();
+    int w = 1 + (matrix.rows()-k)/s ;
+    int h = 1 + (matrix.columns()-k)/s ;
+    int m = 0 ;
+    int n = 0 ;
+    s = s - 1 ;
 
 
     for(int i=0;i<W2;i++){
         for(int j= 0;j <H2; j++){
-            double sum = (matrix.block(i,j,k).Hadamard(kernel)).sum() ;
-            output._MAT[i][j]    = sum ;
+
+            if (j+n >= matrix.columns()) break ;
+            if (i+m >= matrix.rows()) break ;
+            
+            Matrix block  = matrix.block(i+m,j+n,w,h,k) ;
+            
+           n = n+s ;
+           
+     
+            
+            double sum =  (block.Hadamard(kernel)).sum() ;
+         
+            output._MAT[i][j]    = sum;
             output.element[i][j] = sum ;
+            sum = 0 ;
+            
 
         }
+        m = m+s ;
+        n = 0 ;
+        
     }
 
     return output ;
 }
 
 
-Matrix  Matrix::block(int row, int column, int kernel_size) {
+Matrix  Matrix::block(int row, int column, int w, int h, int kernel_size, bool vis) {
 
         Matrix output(kernel_size, kernel_size,false) ;
-        for(int i=0;i<kernel_size;i++){
-            for(int j= 0;j <kernel_size; j++){
-
-                output._MAT[i][j]    = _MAT[i][j];
-                output.element[i][j] = output._MAT[i][j] ;
-
+        int m,n  ;
+        m = 0 ;
+        
+        if (vis == true) std::cout << "block (" << row <<"," <<column<<")\n";
+    
+        
+        for(int i=row;     i<kernel_size+row;i++){
+            n = 0 ;
+            for(int j= column;  j <kernel_size+column; j++){
+               
+         
+                output._MAT[m][n]    = _MAT[i][j];
+                if (vis==true) std::cout  << output._MAT[m][n] << " " ;
+                n++ ;
+                
             }
+            m++ ;
+          
+          if (vis==true) std::cout << std::endl;
         }
 
     return output ;
@@ -103,7 +178,6 @@ double  Matrix::sum() {
 
         for(int i=0;i<_MAT.size();i++){
             for(int j= 0;j <_MAT[0].size(); j++){
-
                 output  += _MAT[i][j];
             
             }
@@ -235,24 +309,29 @@ Matrix Matrix::operator-(const double &m){
 }
 
 
-Matrix Matrix::Hadamard(Matrix & m1){
-
-   
+Matrix Matrix::Hadamard(Matrix& m1){
+  
+    
     assert( _columns == m1._columns && "number of row different of numbers of columns Hadamard");
     assert( _rows    == m1._rows && "number of columns different of numbers of rows Hadamard");
-
-    Matrix result = Matrix(_rows, _columns) ;
-
+    
+    Matrix result(m1.rows(), m1.columns(), false) ;
+    
+    
     for (uint32_t row = 0; row < m1.rows(); row++){
          for (uint32_t col = 0; col < m1.columns(); col++){
-           result._MAT[row][col] = m1.at(row,col) * this->at(row,col);
-           result.element[row][col] = m1.at(row,col) * this->at(row,col);
-           
+     
+          
+           result._MAT[row][col]      = m1.at(row,col) * this->at(row,col);
+           result.element[row][col]   = result._MAT[row][col];
+          
            
         }
 
 
     }
+    
+    
 
     return result ;
 }
@@ -338,8 +417,7 @@ Matrix Matrix::sigmoid () {
     
     for( uint32_t r = 0; r < _rows; r++ ) {
         for( uint32_t c = 0; c < _columns; c++ ) {
-            //m1.element[r][c] = m1.element[r][c] * (-1) ;
-            //std::cout << "sig :" <<m1.element[r][c] <<"\n" ;
+         
             output._MAT[r][c] = (double)(1.0 / (1.0 + (double)std::exp(_MAT[r][c]*(-1))));
             output.element[r][c] = (double)(1.0 / (1.0 + (double)std::exp(-element[r][c]*(-1))));
         }
@@ -423,5 +501,6 @@ return _MAT.size() ;
 
 Matrix::~Matrix()
 {
+    //delete _hadamard ;
 
 }

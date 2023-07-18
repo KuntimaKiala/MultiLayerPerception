@@ -9,15 +9,22 @@ using namespace std ;
 
 
 int main(){
+vector<vector<double>> in{{1,2,8,6}, 
+                          {3,7,5,4},
+                          {4,2,8,9},
+                          {3,5,6,7}};
 
-    vector<vector<double>> in{{4,3,2,1}, 
-                              {4,3,2,1},
-                              {4,3,2,1},
-                              {4,3,2,1}};
+    
+    /*vector<vector<double>> out{{-1,0,1}, 
+                               {-1,0,1},
+                               {-1,0,1}};
 
-    vector<vector<double>> out{{1,0,-1}, 
-                               {1,0,-1},
-                               {1,0,-1}};
+
+    /*vector<vector<double>> in{{1,2}, 
+                              {2,8}};*/
+
+    vector<vector<double>> out{{1,0}, 
+                               {0,1}};
                              
     
     Matrix mat(in) ;
@@ -25,7 +32,10 @@ int main(){
     cout << kernel.rows() << endl ;
     cout << kernel.columns() << endl ;
     Matrix matrix ;
-    Matrix output = matrix.Convolution2D(mat, kernel) ;
+    int padding =0;
+    int stride =1;
+    if (stride == 0) stride = 1 ;
+    Matrix output = matrix.Convolution2D(mat,kernel,padding,stride) ;
 
 
     std::cout << "\n" ;
