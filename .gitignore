@@ -3,5 +3,6 @@ q
 run
 Makefile
 CMakeCache.txt
+train
 
 
