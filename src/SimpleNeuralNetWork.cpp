@@ -14,7 +14,7 @@ SimpleNeuralNetWork::~SimpleNeuralNetWork()
 SimpleNeuralNetWork::SimpleNeuralNetWork(Topology& topology) :_topology(&topology){
     
     
-   for(int i = 0; i<(*_topology).NeuronsPerLayer.size() -1; i++){
+   for(long unsigned int i = 0; i<(*_topology).NeuronsPerLayer.size() -1; i++){
         
         weights.push_back(Matrix(topology.NeuronsPerLayer[i], topology.NeuronsPerLayer[i+1],true)) ;
         bias.push_back(Matrix( 1,topology.NeuronsPerLayer[i+1],true)) ;
@@ -70,7 +70,7 @@ void SimpleNeuralNetWork::updateWeights() {
 int nbLayers  = weights.size()  ;
 
 
-    for(uint32_t l = 0; l < nbLayers; l++){
+    for(int l = 0; l < nbLayers; l++){
         Matrix A = layers[l].neurons.transpose() ;
         Matrix G = errors[l] ;
         Matrix learningrate_times_A_transposed_times_dC_over_dW = A * G *learningRate ;
@@ -111,7 +111,7 @@ void SimpleNeuralNetWork::train(std::vector<Matrix>& input_data, std::vector<Mat
 {
     
 
-    for (int nbInput = 0; nbInput < input_data.size(); nbInput++) {
+    for (long unsigned int nbInput = 0; nbInput < input_data.size(); nbInput++) {
 
         X  = input_data[nbInput];
         Y = output_data[nbInput] ;
@@ -215,7 +215,7 @@ double SimpleNeuralNetWork::sigmoid_deriv (double& m1){
     double output ;
     output = m1*(1-m1) ;
 
-    return m1;
+    return output;
 
 }
 double SimpleNeuralNetWork::ReLu(double & x){

@@ -28,7 +28,7 @@ int main(){
     Data inputs ;
     Data outputs ;
       
-    for(int i = 0; i < in.size(); i++) {
+    for(long unsigned int i = 0; i < in.size(); i++) {
 
         std::vector<Matrix> i1;
         i1.push_back(Matrix(in[i]));
@@ -86,7 +86,7 @@ int main(){
 
     
     std::cout << "\n" ;
-    for(int n = 0; n < _weights.size(); n++){
+    for(long unsigned int n = 0; n < _weights.size(); n++){
         std::cout << "W :\n";
         for(int i = 0; i < _weights[n].rows(); i++){
             for(int j = 0; j < _weights[n].columns(); j++){
@@ -103,7 +103,7 @@ int main(){
     }
 
     std::cout << "\n" ;
-    for(int n = 0; n < _bias.size(); n++){
+    for(long unsigned int n = 0; n < _bias.size(); n++){
         std::cout << "b :\n";
         for(int i = 0; i < _bias[n].rows(); i++){
             for(int j = 0; j < _bias[n].columns(); j++){

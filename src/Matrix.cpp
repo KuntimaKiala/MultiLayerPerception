@@ -19,7 +19,7 @@ Matrix::Matrix(std::vector<std::vector<double>> MAT) : element(MAT), _MAT(MAT){
     _columns = MAT[0].size();
 
 
-    for (int i =0 ; i < _rows; i++) {
+    for (uint32_t i =0 ; i < _rows; i++) {
 
         assert(_columns == MAT[i].size()&&"Matrix definition incorrect, some columns missing") ;
 
