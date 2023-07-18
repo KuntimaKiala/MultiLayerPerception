@@ -1,3 +1,0 @@
-/home/kuntima/workspace/github/MultiLayerPerception/CMakeFiles/rebuild_cache.dir
-/home/kuntima/workspace/github/MultiLayerPerception/CMakeFiles/edit_cache.dir
-/home/kuntima/workspace/github/MultiLayerPerception/CMakeFiles/train.dir
